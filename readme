@@ -1,0 +1,20 @@
+Datastorer
+
+	Flag -> '0' means start of a list '1' means Currently storing data block size info '2' means 
+			currently storing some data '3' means end of current list
+	Data -> User decided .
+	
+Syntax For assembly language
+
+	A list Storing a name 	== Variable
+	/\ 						== lambda
+	:= 						== Definition
+	A list of Variables		== list
+	.						== Simple dot used for abstraction
+	()						== parenthesis used for application
+	(						== LPAREN
+	)						== RPAREN
+	
+Runner 
+	
+	strtf expcode strtf String1 stopf strtf  stopf stopf
