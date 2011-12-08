@@ -15,6 +15,79 @@ Syntax For assembly language
 	(						== LPAREN
 	)						== RPAREN
 	
-Runner 
-	
-	strtf expcode strtf String1 stopf strtf  stopf stopf
+Hereby let me give ISA specifications though in brief but the sole idea is here
+
+I tried to have as minimal ISA as i could in this much time yet with little humanity too
+So by stmt1 , stmt2 kind of statements assume it is going to be a single machine instruction .
+
+Let us a program which operates sequentially , Without any if else
+
+Ex. A program to add one node to Storage Memory after current location and then forward 
+Storage memory pointer by 1 .
+
+INST1s , stmt1 stmt2 | INST2s , | FLGS , | STRDT1 , STRDT2
+
+=>	INST1s stmt1 , stmt2 | INST2s , | FLGS , | STRDT1 , DT1 STRDT2 
+
+=>	INST1s stmt1 stmt2 , | INST2s , | FLGS , | STRDT1 DT1 , STRDT2 
+
+Now Let us consider execution of a program with an if else . 
+
+The 'C' kind of code (just to show blocks of code )
+
+stmt1
+if(exp1)
+{
+	stmt2
+	stmt3
+	if(exp2)
+	{
+		stmt4
+		stmt5
+	}
+}
+else
+{
+	stmt6
+	stmt7
+}
+
+
+Sorry for this large example . But hope no one will shout about case handling atleast .
+If you still think there is some where this will not work , then your warm welcome from me .
+
+So let us see how it executes .
+
+INST1s , stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s , | FLGS , | STRDT
+
+=> INST1s stmt1 , CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s , | FLGS , | STRDT'
+
+=> INST1s stmt1 CMP1 , SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s , | FLGS , | STRDT'
+
+=> INST1s stmt1 CMP1 SFG1 , ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s , | FLGS FG1 , | STRDT'
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf , stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 , | STRDT'
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 , stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 , | STRDT''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 , CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 , | STRDT'''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 , SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 , | STRDT'''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 , ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 FG2 , | STRDT'''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf , stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf ifstrtf , | FLGS FG1 FG2 , | STRDT'''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 , stmt5 ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf ifstrtf , | FLGS FG1 FG2 , | STRDT''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 , ifsf elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf ifstrtf , | FLGS FG1 FG2 , | STRDT'''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf , elstrtf stmt6 stmt7 ifelsf | INST2s ifstrtf , | FLGS FG1 , | STRDT'''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf , stmt6 stmt7 ifelsf | INST2s elstrtf , | FLGS FG1 , | STRDT'''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 , stmt7 ifelsf | INST2s elstrtf , | FLGS FG1 , | STRDT''''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 , ifelsf | INST2s elstrtf , | FLGS FG1 , | STRDT'''''''
+
+=> INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf , | INST2s , | FLGS , | STRDT'''''''
