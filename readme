@@ -91,3 +91,40 @@ INST1s , stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf 
 => INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 , ifelsf | INST2s elstrtf , | FLGS FG1 , | STRDT'''''''
 
 => INST1s stmt1 CMP1 SFG1 ifstrtf stmt2 stmt3 CMP2 SFG2 ifstrtf stmt4 stmt5 ifsf elstrtf stmt6 stmt7 ifelsf , | INST2s , | FLGS , | STRDT'''''''
+
+
+
+
+
+
+
+
+
+Now after vomiting out all this would you like to see for while too if you do then i will
+show you just a simple version with nested while and after that with if else too
+
+while(exp)
+{
+	stmt1
+	stmt2
+}
+
+INST1s , CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 whsf | INST2s , | FLGS , | STRDT
+
+=> INST1s CMP1 , SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 whsf | INST2s , | FLGS , | STRDT
+
+=> INST1s CMP1 SFG1 , whstrtf stmt1 stmt2 CMP1 RSFG1 whsf | INST2s , | FLGS FG1 , | STRDT
+
+=> INST1s CMP1 SFG1 whstrtf , stmt1 stmt2 CMP1 RSFG1 whsf | INST2s whf whstrtf , | FLGS FG1 , | STRDT
+
+=> INST1s CMP1 SFG1 whstrtf stmt1 , stmt2 CMP1 RSFG1 whsf | INST2s whf whstrtf bck, | FLGS FG1 , | STRDT'
+
+=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 , CMP1 RSFG1 whsf | INST2s whf whstrtf bck bck, | FLGS FG1 , | STRDT''
+
+=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 , RSFG1 whsf | INST2s whf whstrtf bck bck, | FLGS FG1 , | STRDT''
+
+=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 , whsf | INST2s whf whstrtf bck bck, | FLGS FG1' , | STRDT''
+	==> INST1s CMP1 SFG1 whstrtf , stmt1 stmt2 CMP1 RSFG1 whsf | INST2s whf whstrtf , | FLGS FG1' , | STRDT''
+	==> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 whsf , | INST2s whf , | FLGS , | STRDT''
+	
+For nested while loop have a thought bbye for now .
