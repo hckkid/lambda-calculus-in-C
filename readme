@@ -121,10 +121,58 @@ INST1s , CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 whsf | INST2s , | FLGS , | STR
 
 => INST1s CMP1 SFG1 whstrtf stmt1 stmt2 , CMP1 RSFG1 whsf | INST2s whf whstrtf bck bck, | FLGS FG1 , | STRDT''
 
-=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 , RSFG1 whsf | INST2s whf whstrtf bck bck, | FLGS FG1 , | STRDT''
+=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 , RSFG1 whsf | INST2s whf whstrtf bck bck bck , | FLGS FG1 , | STRDT''
 
-=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 , whsf | INST2s whf whstrtf bck bck, | FLGS FG1' , | STRDT''
+=> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 , whsf | INST2s whf whstrtf bck bck bck bck , | FLGS FG1' , | STRDT''
 	==> INST1s CMP1 SFG1 whstrtf , stmt1 stmt2 CMP1 RSFG1 whsf | INST2s whf whstrtf , | FLGS FG1' , | STRDT''
 	==> INST1s CMP1 SFG1 whstrtf stmt1 stmt2 CMP1 RSFG1 whsf , | INST2s whf , | FLGS , | STRDT''
 	
-For nested while loop have a thought bbye for now .
+since if else is sequential and linear
+above program works for if else too
+
+Now let us consider nested while loop
+
+while(exp1)
+{
+	stmt1
+	while(exp2)
+	{
+		stmt2
+	}
+}
+
+INST1s , CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s , | FLGS , | STRDT
+
+=> INST1s CMP1 , SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s , | FLGS , | STRDT
+
+=> INST1s CMP1 SF1 , whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s , | FLGS FG1 , | STRDT
+
+=> INST1s CMP1 SF1 whstrtf , stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf , | FLGS FG1 , | STRDT
+
+=> INST1s CMP1 SF1 whstrtf stmt1 , CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck , | FLGS FG1 , | STRDT'
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 , SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck , | FLGS FG1 , | STRDT'
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 , whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck , | FLGS FG1 , | STRDT'
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf , stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf whstrtf , | FLGS FG1 FG2 , | STRDT'
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 , CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf whstrtf bck , | FLGS FG1 FG2 , | STRDT''
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 , RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf whstrtf bck bck , | FLGS FG1 FG2 , | STRDT''
+
+=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 , whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf whstrtf bck bck bck , | FLGS FG1 FG2' , | STRDT''
+
+
+
+N=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf , CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf , | FLGS FG1 , | STRDT''
+
+N=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 , RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf bck , | FLGS FG1 , | STRDT''
+
+N=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 , whsf | INST2s whf wfstrtf bck bck bck whf bck bck , | FLGS FG1' , | STRDT''
+
+NN=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf , | INST2s whf , | FLGS , | STRDT''
+
+NY=> INST1s CMP1 SF1 whstrtf , stmt1 CMP2 SF2 whstrtf stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf whstrtf , | FLGS FG' , | STRDT''
+
+Y=> INST1s CMP1 SF1 whstrtf stmt1 CMP2 SF2 whstrtf , stmt2 CMP2 RSFG2 whsf CMP1 RSFG1 whsf | INST2s whf wfstrtf bck bck bck whf whstrtf , | FLGS FG1 FG2' , | STRDT''
