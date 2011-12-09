@@ -1,8 +1,17 @@
 Datastorer
-	flag 		== 0 if Belongs to instructions 1 section
-				== 1 if Belongs to instructions 2 section
-				== 2 if Belongs to Flags section
-				== 3 if Belongs to Data section
+
+	flag 		== 0 if start of instructions 1 section
+				== 1 if Belongs to instructions 1 section
+				== 2 if end of instructions 1 section
+				== 3 if start of instructions 2 section
+				== 4 if Belongs to instructions 2 section
+				== 5 if stop of instructions 2 section
+				== 6 if start of Flags section
+				== 7 if Belongs to Flags section
+				== 8 if stop of Flags section
+				== 9 if start of Data section
+				== 10 if Belongs to Data section
+				== 11 if stop of Data section
 	data[0] 	== 0 if normal statement i.e. single node except ones discussed below
 				== 1 if CMP // compare data[2] register with data[3] and store in currflag
 				== 2 if SFG // compare and store in data[2] flag and add to flag section 
@@ -22,16 +31,17 @@ Datastorer
 				== 16 if Data storing note
 	data[1]		== 0 if read						
 				== 1 if write
-				== 2 if create node after current and seek controller by 1
-				== 3 if create node after current and controller unchanged
-				== 4 if create node before current and seek controller by -1
-				== 5 if create node after current and controller unchanged
+				== 2 seek controller by 1
+				== 3 seek controller by -1
+				== 4 if create node after current and controller unchanged
+				== 5 if create node before current and controller unchanged
 				== 6 if delete node after current and controller unchanged
 				== 7 if delete node before current and controller unchanged
 				== 8 to move data from data[2] register to data[3] controller
 				== 9 to move data to data[2] register from data[3] controller
 				== 10 to move data from data[2] register to data[3] register
-Syntax For assembly language
+
+Syntax For assembly language (of lambda calculus simply bcz my machine lang is little readable)
 
 	A list Storing a name 	== Variable
 	/\ 						== lambda

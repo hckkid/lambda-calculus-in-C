@@ -2,5 +2,5 @@
 #define CPUFUNCS_H
 #include "datastorer.h"
 #include "memory.h"
-void proceed(dtstr *dt);
+void proceed(list *mem);
 #endif
