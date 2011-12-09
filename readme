@@ -1,9 +1,25 @@
 Datastorer
-
-	Flag -> '0' means start of a list '1' means Currently storing data block size info '2' means 
-			currently storing some data '3' means end of current list
-	Data -> User decided .
-	
+	flag 		== 0 if Belongs to instructions 1 section
+				== 1 if Belongs to instructions 2 section
+				== 2 if Belongs to IfFlags section      	// srry bcz i used only one flag section
+				== 3 if Belongs to WhileFlags section		// but please change below code execution accordingly
+				== 3 if Belongs to Data section
+	data[0] 	== 0 if normal statement i.e. single node except ones discussed below
+				== 1 if CMP
+				== 2 if SFG
+				== 3 if RSFG
+				== 4 if ifstrtf
+				== 5 if ifsf
+				== 6 if elsestrtf
+				== 7 if elsesf
+				== 8 if whf
+				== 9 if wfstrtf
+				== 10 if wfsf
+				== 11 if FG is True
+				== 12 if FG is True
+				== 13 if bck
+				== 14 if Data storing note
+	data[1]		
 Syntax For assembly language
 
 	A list Storing a name 	== Variable
